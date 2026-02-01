@@ -1,0 +1,6 @@
+---
+
+- name: Ensure network for vaultwarden exists ({{ vaultwarden_container_network_name }})
+  docker_network:
+    name: "{{ vaultwarden_container_network_name }}"
+    state: present

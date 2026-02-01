@@ -1,0 +1,40 @@
+---
+
+- name: Ensure required directories exist
+  file:
+    path: "{{ item }}"
+    state: directory
+  loop:
+    - "{{ vaultwarden_container_data_dir }}"
+
+# we cannot pass the SMTP_USERNAME and SMTP_PASSWORD when empty
+# as the container thinks it needs to negotiate encryption for
+# authentication as soon as the environment variables are set
+# (even if the variables turn out to be empty)
+- name: Add SMTP credentials if defined
+  set_fact:
+    vaultwarden_container_smtp_credentials:
+      SMTP_USERNAME: "{{ vaultwarden_container_smtp_username }}"
+      SMTP_PASSWORD: "{{ vaultwarden_container_smtp_password }}"
+  when:
+    - vaultwarden_container_smtp_username != ''
+    - vaultwarden_container_smtp_password != ''
+
+- name: Run vaultwarden container
+  docker_container:
+    name: "{{ vaultwarden_container_name }}"
+    image: "{{ vaultwarden_container_image }}:{{ vaultwarden_container_version }}"
+    state: started
+    restart_policy: "{{ vaultwarden_container_restart_policy }}"
+    env: "{{ vaultwarden_container_env_vars | combine(vaultwarden_container_smtp_credentials) }}"
+    volumes:
+      - "{{ vaultwarden_container_data_dir }}:/data:rw"
+    networks:
+      - name: "{{ vaultwarden_container_network_name }}"
+    published_ports: "{{ vaultwarden_container_exposed_port }}:80"
+    # healthcheck:
+    #   test: ["CMD", "curl -f http://localhost:8080/login/ || exit 1"]
+    #   interval: 15s
+    #   timeout: 3s
+    #   retries: 8
+    #   start_period: 90s

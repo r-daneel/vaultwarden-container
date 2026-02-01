@@ -1,0 +1,16 @@
+---
+
+vaultwarden_container_env_vars:
+  ADMIN_TOKEN: "{{ vaultwarden_container_admin_token }}"
+  DOMAIN: "{{ vaultwarden_container_url }}"
+  SMTP_HOST: "{{ vaultwarden_container_smtp_host }}"
+  SMTP_FROM: "{{ vaultwarden_container_smtp_from }}"
+  SMTP_FROM_NAME: "{{ vaultwarden_container_smtp_from_name }}"
+  SMTP_TIMEOUT: "{{ vaultwarden_container_smtp_timeout }}"
+  SMTP_SECURITY: "{{ vaultwarden_container_smtp_security }}"
+  SMTP_PORT: "{{ vaultwarden_container_smtp_port }}"
+  HELO_NAME: "{{ vaultwarden_container_smtp_helo_name }}"
+
+# this is required workaround to obtain idempotency
+vaultwarden_container_smtp_credentials:
+  NO_SMTP_CREDENTIALS: ""

@@ -1,0 +1,40 @@
+---
+
+# Images & versions
+vaultwarden_container_image: "vaultwarden/server"
+vaultwarden_container_version: "latest"
+
+# Container name
+vaultwarden_container_name: "vaultwarden"
+
+# Volumes
+vaultwarden_container_base_dir: "/data/{{ vaultwarden_container_name }}"
+vaultwarden_container_data_dir: "{{ vaultwarden_container_base_dir }}/vw-data"
+
+# Secrets
+vaultwarden_container_admin_token: ''
+
+# Network
+vaultwarden_container_network_name: 'vaultwarden_network'
+
+vaultwarden_container_restart_policy: 'unless-stopped'
+
+vaultwarden_container_exposed_port: '80'
+
+vaultwarden_container_timezone: 'Etc/UTC'
+
+# Set this to 'true' to force pulling of docker images
+# By default this triggers app & db images pulling
+vaultwarden_container_update: false
+
+vaultwarden_container_url: "https://{{ vaultwarden_container_app_name }}"
+
+vaultwarden_container_smtp_host: ""
+vaultwarden_container_smtp_from: "vaultwarden@localhost"
+vaultwarden_container_smtp_from_name: "Vaultwarden"
+vaultwarden_container_smtp_username: ""
+vaultwarden_container_smtp_password: ""
+vaultwarden_container_smtp_timeout: "15"
+vaultwarden_container_smtp_security: "off"
+vaultwarden_container_smtp_port: "25"
+vaultwarden_container_smtp_helo_name: "{{ vaultwarden_container_name }}"

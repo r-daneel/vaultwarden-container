@@ -1,0 +1,16 @@
+---
+
+- name: Pre-flight checks
+  include_tasks: vaultwarden-container_preflight_checks.yaml
+  tags:
+    - vaultwarden-container_preflight_checks
+
+- name: Setup network
+  include_tasks: vaultwarden-container_network.yaml
+  tags:
+    - vaultwarden-container_network
+
+- name: Setup vaultwarden
+  include_tasks: vaultwarden-container_vaultwarden.yaml
+  tags:
+    - vaultwarden-container_vaultwarden
