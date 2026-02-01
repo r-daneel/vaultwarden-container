@@ -24,7 +24,6 @@ vaultwarden_container_exposed_port: '80'
 vaultwarden_container_timezone: 'Etc/UTC'
 
 # Set this to 'true' to force pulling of docker images
-# By default this triggers app & db images pulling
 vaultwarden_container_update: false
 
 vaultwarden_container_url: "https://{{ vaultwarden_container_app_name }}"
