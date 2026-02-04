@@ -1,6 +1,15 @@
 ---
 
-- name: Ensure network for vaultwarden exists ({{ vaultwarden_container_network_name }})
+- name: Build networks list
+  set_fact:
+    _vaultwarden_container_networks: "{{ ( _vaultwarden_container_networks | default([]) ) + [ { 'name': item } ] }}"
+  when:
+    - item != ''
+  loop:
+    - "{{ vaultwarden_container_network_name }}"
+
+- name: Ensure networks for vaultwarden exists
   docker_network:
-    name: "{{ vaultwarden_container_network_name }}"
+    name: "{{ item.name }}"
     state: present
+  loop: "{{ _vaultwarden_container_networks }}"

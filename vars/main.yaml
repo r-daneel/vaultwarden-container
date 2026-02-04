@@ -1,5 +1,7 @@
 ---
 
+vaultwarden_container_service_port: '80'
+
 vaultwarden_container_env_vars:
   ADMIN_TOKEN: "{{ vaultwarden_container_admin_token }}"
   DOMAIN: "{{ vaultwarden_container_url }}"

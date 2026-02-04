@@ -20,6 +20,12 @@
     - vaultwarden_container_smtp_username != ''
     - vaultwarden_container_smtp_password != ''
 
+- name: Set published port
+  set_fact:
+    _vaultwarden_container_published_ports: "{{ vaultwarden_container_exposed_port }}:{{ vaultwarden_container_service_port }}"
+  when:
+    - vaultwarden_container_exposed_port != ''
+
 - name: Run vaultwarden container
   docker_container:
     name: "{{ vaultwarden_container_name }}"
@@ -31,10 +37,19 @@
       - "{{ vaultwarden_container_data_dir }}:/data:rw"
     networks:
       - name: "{{ vaultwarden_container_network_name }}"
-    published_ports: "{{ vaultwarden_container_exposed_port }}:80"
-    # healthcheck:
-    #   test: ["CMD", "curl -f http://localhost:8080/login/ || exit 1"]
-    #   interval: 15s
-    #   timeout: 3s
-    #   retries: 8
-    #   start_period: 90s
+    published_ports: "{{ _vaultwarden_container_published_ports | default(omit, true) }}"
+    healthcheck:
+      test:
+        - "CMD"
+        - "/usr/bin/curl"
+        - "--insecure"
+        - "--fail"
+        - "--silent"
+        - "--show-error"
+        - "{{ __check_url }}"
+      interval: 15s
+      timeout: 3s
+      retries: 8
+      start_period: 90s
+  vars:
+    __check_url: "http://localhost:{{ vaultwarden_container_service_port }}/alive"

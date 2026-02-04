@@ -15,7 +15,7 @@ vaultwarden_container_data_dir: "{{ vaultwarden_container_base_dir }}/vw-data"
 vaultwarden_container_admin_token: ''
 
 # Network
-vaultwarden_container_network_name: 'vaultwarden_network'
+vaultwarden_container_network_name: ''
 
 vaultwarden_container_restart_policy: 'unless-stopped'
 
