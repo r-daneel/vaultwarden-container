@@ -1,15 +1,18 @@
 ---
 
+- name: Set published port
+  ansible.builtin.set_fact:
+    _vaultwarden_container_published_ports: "{{ vaultwarden_container_exposed_port }}:{{ vaultwarden_container_service_port }}"
+  when:
+    - vaultwarden_container_exposed_port != ''
+
 - name: Build networks list
   ansible.builtin.set_fact:
-    _vaultwarden_container_networks: "{{ ( _vaultwarden_container_networks | default([]) ) + [ { 'name': item } ] }}"
-  when:
-    - item != ''
-  loop:
-    - "{{ vaultwarden_container_network_name }}"
+    _vaultwarden_container_network_list:
+      - name: "{{ vaultwarden_container_network_name }}"
 
 - name: Ensure networks for vaultwarden exists
   community.docker.docker_network:
     name: "{{ item.name }}"
     state: present
-  loop: "{{ _vaultwarden_container_networks }}"
+  loop: "{{ _vaultwarden_container_network_list }}"
