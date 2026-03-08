@@ -26,7 +26,7 @@ vaultwarden_container_timezone: 'Etc/UTC'
 # Set this to 'true' to force pulling of docker images
 vaultwarden_container_update: false
 
-vaultwarden_container_url: "https://{{ vaultwarden_container_app_name }}"
+vaultwarden_container_url: "https://{{ vaultwarden_container_name }}"
 
 vaultwarden_container_smtp_host: ""
 vaultwarden_container_smtp_from: "vaultwarden@localhost"
