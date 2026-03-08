@@ -21,8 +21,6 @@ vaultwarden_container_restart_policy: 'unless-stopped'
 
 vaultwarden_container_exposed_port: '80'
 
-vaultwarden_container_timezone: 'Etc/UTC'
-
 # Set this to 'true' to force pulling of docker images
 vaultwarden_container_update: false
 
