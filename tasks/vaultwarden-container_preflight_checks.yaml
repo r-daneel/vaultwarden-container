@@ -16,7 +16,6 @@
       - vaultwarden_container_base_dir != ''
       - vaultwarden_container_data_dir != ''
       - vaultwarden_container_name != ''
-      - vaultwarden_container_network_name != ''
       - vaultwarden_container_restart_policy != ''
       - vaultwarden_container_url != ''
       - vaultwarden_container_version != ''
