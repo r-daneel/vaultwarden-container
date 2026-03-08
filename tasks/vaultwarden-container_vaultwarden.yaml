@@ -30,6 +30,7 @@
   community.docker.docker_container:
     name: "{{ vaultwarden_container_name }}"
     image: "{{ vaultwarden_container_image }}:{{ vaultwarden_container_version }}"
+    pull: "{{ vaultwarden_container_update | bool }}"
     state: started
     restart_policy: "{{ vaultwarden_container_restart_policy }}"
     env: "{{ vaultwarden_container_env_vars | combine(vaultwarden_container_smtp_credentials) }}"
