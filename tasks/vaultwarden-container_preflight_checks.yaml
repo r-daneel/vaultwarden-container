@@ -8,7 +8,6 @@
   when:
     - vaultwarden_container_exposed_port == ''
 
-
 - name: Preflight checks
   ansible.builtin.assert:
     that:
