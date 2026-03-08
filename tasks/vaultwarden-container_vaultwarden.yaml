@@ -27,6 +27,7 @@
     - vaultwarden_container_exposed_port != ''
 
 - name: Run vaultwarden container
+  notify: Restart vaultwarden container
   community.docker.docker_container:
     name: "{{ vaultwarden_container_name }}"
     image: "{{ vaultwarden_container_image }}:{{ vaultwarden_container_version }}"
