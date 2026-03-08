@@ -1,14 +1,20 @@
 ---
 
-- name: Ensure required directories exist
+- name: Ensure base directory exists
   ansible.builtin.file:
-    path: "{{ item }}"
+    path: "{{ vaultwarden_container_base_dir }}"
     state: directory
     owner: root
     group: root
     mode: '0750'
-  loop:
-    - "{{ vaultwarden_container_data_dir }}"
+
+- name: Ensure data directory exists
+  ansible.builtin.file:
+    path: "{{ vaultwarden_container_data_dir }}"
+    state: directory
+    owner: root
+    group: root
+    mode: '0750'
 
 # we cannot pass the SMTP_USERNAME and SMTP_PASSWORD when empty
 # as the container thinks it needs to negotiate encryption for

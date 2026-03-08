@@ -23,14 +23,3 @@
       - vaultwarden_container_version != ''
     quiet: true
 
-- name: Create base dir
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: directory
-    owner: 'root'
-    group: 'root'
-    mode: '0750'
-  loop: 
-    - "{{ vaultwarden_container_base_dir }}"
-  loop_control:
-    label: "{{ item }}"
