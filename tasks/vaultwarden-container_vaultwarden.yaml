@@ -57,3 +57,13 @@
       start_period: 90s
   vars:
     __check_url: "http://localhost:{{ vaultwarden_container_service_port }}/alive"
+
+- name: Debug container configuration
+  ansible.builtin.debug:
+    msg:
+      image: "{{ vaultwarden_container_image }}:{{ vaultwarden_container_version }}"
+      data_dir: "{{ vaultwarden_container_data_dir }}"
+      network: "{{ vaultwarden_container_network_name }}"
+      published_ports: "{{ _vaultwarden_container_published_ports | default('none') }}"
+      url: "{{ vaultwarden_container_url }}"
+  when: vaultwarden_container_debug | bool
