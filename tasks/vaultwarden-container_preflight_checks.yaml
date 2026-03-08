@@ -14,16 +14,13 @@
     that:
       - vaultwarden_container_admin_token != ''
       - vaultwarden_container_base_dir != ''
-      - vaultwarden_container_version != ''
-      - vaultwarden_container_name != ''
-      - vaultwarden_container_base_dir != ''
       - vaultwarden_container_data_dir != ''
-      - vaultwarden_container_admin_token != ''
+      - vaultwarden_container_name != ''
       - vaultwarden_container_network_name != ''
       - vaultwarden_container_restart_policy != ''
       - vaultwarden_container_timezone != ''
-      - vaultwarden_container_update != ''
       - vaultwarden_container_url != ''
+      - vaultwarden_container_version != ''
     quiet: true
 
 - name: Create base dir
