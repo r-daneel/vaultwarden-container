@@ -1,7 +1,7 @@
 ---
 
 - name: Preflight checks - network
-  assert:
+  ansible.builtin.assert:
     that:
       - vaultwarden_container_network_name != ''
     quiet: true
@@ -10,7 +10,7 @@
 
 
 - name: Preflight checks
-  assert:
+  ansible.builtin.assert:
     that:
       - vaultwarden_container_admin_token != ''
       - vaultwarden_container_base_dir != ''
