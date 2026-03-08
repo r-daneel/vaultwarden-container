@@ -1,10 +1,14 @@
 ---
 
 - name: Ensure required directories exist
-  file:
+  ansible.builtin.file:
     path: "{{ item }}"
     state: directory
+    owner: root
+    group: root
+    mode: '0750'
   loop:
+    - "{{ vaultwarden_container_base_dir }}"
     - "{{ vaultwarden_container_data_dir }}"
 
 # we cannot pass the SMTP_USERNAME and SMTP_PASSWORD when empty
@@ -12,7 +16,7 @@
 # authentication as soon as the environment variables are set
 # (even if the variables turn out to be empty)
 - name: Add SMTP credentials if defined
-  set_fact:
+  ansible.builtin.set_fact:
     vaultwarden_container_smtp_credentials:
       SMTP_USERNAME: "{{ vaultwarden_container_smtp_username }}"
       SMTP_PASSWORD: "{{ vaultwarden_container_smtp_password }}"
@@ -21,15 +25,16 @@
     - vaultwarden_container_smtp_password != ''
 
 - name: Set published port
-  set_fact:
+  ansible.builtin.set_fact:
     _vaultwarden_container_published_ports: "{{ vaultwarden_container_exposed_port }}:{{ vaultwarden_container_service_port }}"
   when:
     - vaultwarden_container_exposed_port != ''
 
 - name: Run vaultwarden container
-  docker_container:
+  community.docker.docker_container:
     name: "{{ vaultwarden_container_name }}"
     image: "{{ vaultwarden_container_image }}:{{ vaultwarden_container_version }}"
+    pull: "{{ vaultwarden_container_update | bool }}"
     state: started
     restart_policy: "{{ vaultwarden_container_restart_policy }}"
     env: "{{ vaultwarden_container_env_vars | combine(vaultwarden_container_smtp_credentials) }}"
@@ -53,3 +58,13 @@
       start_period: 90s
   vars:
     __check_url: "http://localhost:{{ vaultwarden_container_service_port }}/alive"
+
+- name: Debug container configuration
+  ansible.builtin.debug:
+    msg:
+      image: "{{ vaultwarden_container_image }}:{{ vaultwarden_container_version }}"
+      data_dir: "{{ vaultwarden_container_data_dir }}"
+      network: "{{ vaultwarden_container_network_name }}"
+      published_ports: "{{ _vaultwarden_container_published_ports | default('none') }}"
+      url: "{{ vaultwarden_container_url }}"
+  when: vaultwarden_container_debug | bool

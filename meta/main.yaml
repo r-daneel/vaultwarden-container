@@ -1,0 +1,17 @@
+---
+
+galaxy_info:
+  role_name: vaultwarden_container
+  author: ""
+  description: Deploy Vaultwarden as a Docker container
+  license: MIT
+  min_ansible_version: "2.14"
+  platforms:
+    - name: Ubuntu
+      versions:
+        - focal
+        - jammy
+        - noble
+
+collections:
+  - community.docker
