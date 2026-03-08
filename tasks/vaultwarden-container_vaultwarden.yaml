@@ -4,6 +4,9 @@
   ansible.builtin.file:
     path: "{{ item }}"
     state: directory
+    owner: root
+    group: root
+    mode: '0750'
   loop:
     - "{{ vaultwarden_container_data_dir }}"
 
